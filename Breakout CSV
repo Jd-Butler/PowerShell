@@ -1,0 +1,6 @@
+'Change C:\ directory of file. Change readcount to number of lines per file.
+
+$i=0; Get-Content C:\Users\name\Desktop\Kaggle\netflix_titlesskip1.csv -ReadCount 1000 | %{$i++; $_ | Out-File C:\Users\name\Desktop\Kaggle\netflix_titleOutputSkip1_$i.csv}    
+
+'Creates new csv without first line.
+Get-Content C:\Users\name\Desktop\Kaggle\netflix_titles.csv | select-object -skip 1 | Out-File netflix_titlesskip1.csv    
