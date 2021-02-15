@@ -10,14 +10,24 @@ Get-Content C:\Users\name\Desktop\Kaggle\netflix_titles.csv | select-object -ski
 param(
 [parameter(Mandatory=$true)] [string] $FilePath,
 [parameter(Mandatory=$true)] [string] $NewBaseFileName,
-[parameter(Mandatory=$true)] [int] $batchSize)
+[parameter(Mandatory=$true)] [int] $BatchSize,
+[parameter(Mandatory=$true)] [string] $DeleteOldBaseFiles)
 
 $dirPath = [io.path]::GetDirectoryName($FilePath)
+$myData = get-content $FilePath
+$mainFolderFiles = Get-ChildItem $dirPath
 $ii = 0
 
-Write-host $dirpath
-for ($i=1; $i -lt $myfile.Length; $i += $batchSize){
+if ($DeleteOldBaseFiles -like "Yes"){
+    Foreach($file in $mainFolderFiles) {
+    if($file.Name -like "$NewBaseFileName*"){
+        if($file.fullname -notlike $FilePath){
+            write-host $file.FullName "removed"
+            remove-item $file.fullname}}}}
+
+for ($i=1; $i -lt $myData.Length; $i += $BatchSize){
     $ii++
-   write-output $header $myfile[$i..($i + $batchsize -1)] | Out-file $dirpath\$NewBaseFileName$ii.csv}
+   Write-Output $header $myData[$i..($i + $Batchsize -1)] | Out-file $dirpath\$NewBaseFileName$ii.csv}
+   #Write-host  $i ($i + $Batchsize -1)] }
 
 ###
