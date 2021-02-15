@@ -11,7 +11,9 @@ param(
 [parameter(Mandatory=$true)] [string] $FilePath,
 [parameter(Mandatory=$true)] [string] $NewBaseFileName,
 [parameter(Mandatory=$true)] [int] $BatchSize,
-[parameter(Mandatory=$true)] [string] $DeleteOldBaseFiles)
+[parameter(Mandatory=$true)] [string] $DeleteOldBaseFiles,
+[parameter(Mandatory=$true)] [string] $KeepHeader)
+
 
 $dirPath = [io.path]::GetDirectoryName($FilePath)
 $myData = get-content $FilePath
@@ -27,7 +29,13 @@ if ($DeleteOldBaseFiles -like "Yes"){
 
 for ($i=1; $i -lt $myData.Length; $i += $BatchSize){
     $ii++
-   Write-Output $header $myData[$i..($i + $Batchsize -1)] | Out-file $dirpath\$NewBaseFileName$ii.csv}
-   #Write-host  $i ($i + $Batchsize -1)] }
+    if ($KeepHeader -like "Yes") {
+        Write-Output $header $myData[$i..($i + $Batchsize -1)] | Out-file $dirpath\$NewBaseFileName$ii.csv}
+        #Write-host  $i ($i + $Batchsize -1)] }
+    else {
+        Write-Output $myData[$i..($i + $Batchsize -1)] | Out-file $dirpath\$NewBaseFileName$ii.csv}
+        #Write-host  $i ($i + $Batchsize -1)] }
+    }
+}
 
 ###
