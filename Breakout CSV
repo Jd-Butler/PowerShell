@@ -4,3 +4,20 @@ $i=0; Get-Content C:\Users\name\Desktop\Kaggle\netflix_titlesskip1.csv -ReadCoun
 
 'Creates new csv without first line.
 Get-Content C:\Users\name\Desktop\Kaggle\netflix_titles.csv | select-object -skip 1 | Out-File netflix_titlesskip1.csv    
+
+
+###
+param(
+[parameter(Mandatory=$true)] [string] $FilePath,
+[parameter(Mandatory=$true)] [string] $NewBaseFileName,
+[parameter(Mandatory=$true)] [int] $batchSize)
+
+$dirPath = [io.path]::GetDirectoryName($FilePath)
+$ii = 0
+
+Write-host $dirpath
+for ($i=1; $i -lt $myfile.Length; $i += $batchSize){
+    $ii++
+   write-output $header $myfile[$i..($i + $batchsize -1)] | Out-file $dirpath\$NewBaseFileName$ii.csv}
+
+###
