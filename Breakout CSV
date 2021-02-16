@@ -29,13 +29,11 @@ if ($DeleteOldBaseFiles -like "Yes"){
 
 for ($i=1; $i -lt $myData.Length; $i += $BatchSize){
     $ii++
-    if ($KeepHeader -like "Yes") {
-        Write-Output $header $myData[$i..($i + $Batchsize -1)] | Out-file $dirpath\$NewBaseFileName$ii.csv}
+    if ($KeepHeader -eq "Yes") {
+        Write-Output $mydata[0] $myData[$i..($i + $Batchsize -1)] | Out-file $dirpath\$NewBaseFileName$ii.csv}
         #Write-host  $i ($i + $Batchsize -1)] }
     else {
         Write-Output $myData[$i..($i + $Batchsize -1)] | Out-file $dirpath\$NewBaseFileName$ii.csv}
         #Write-host  $i ($i + $Batchsize -1)] }
     }
-}
-
 ###
